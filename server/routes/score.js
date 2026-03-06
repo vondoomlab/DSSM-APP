@@ -3,9 +3,8 @@ const router = express.Router();
 const Anthropic = require('@anthropic-ai/sdk');
 const { getSystemPrompt } = require('../utils/systemPrompt');
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
 router.post('/', async (req, res) => {
+  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
   const { siteName, location, dateRange, observables } = req.body;
 
   if (!siteName) {
