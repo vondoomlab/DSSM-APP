@@ -103,6 +103,7 @@ export default function SatelliteMode() {
       if (data.error) throw new Error(data.error);
       const fullAnswer = data.answer || '';
       setResponse(fullAnswer);
+      setLoading(false);
       refreshCredits();
     } catch(err) {
       setError(err.message || 'Prediction failed. Is the server running?');

@@ -141,6 +141,7 @@ export default function ScoreMode() {
       if (data.error) throw new Error(data.error);
       const fullAnswer = data.answer || '';
       setResponse(fullAnswer);
+      setLoading(false);
       refreshCredits();
     } catch(err) {
       setError(err.message || 'Scoring failed. Is the server running?');

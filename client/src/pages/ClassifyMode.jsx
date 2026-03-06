@@ -55,6 +55,7 @@ export default function ClassifyMode() {
       if (data.error) throw new Error(data.error);
       const fullAnswer = data.answer || '';
       setResponse(fullAnswer);
+      setLoading(false);
       const stageMatch = fullAnswer.match(/Stage\s*[:-]?\s*(\d)/i);
       if (stageMatch) setDetectedStage(parseInt(stageMatch[1]));
       refreshCredits();
