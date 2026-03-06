@@ -106,12 +106,19 @@ export default function AskMode() {
         body: JSON.stringify({ question: currentQuestion, conversationHistory })
       });
 
-      const data = await res.json();
+      let data;
+      try {
+        data = await res.json();
+      } catch (e) {
+        throw new Error(`Server returned invalid response (status ${res.status})`);
+      }
+
       if (!res.ok) throw new Error(data.error || `Server error ${res.status}`);
       if (data.error) throw new Error(data.error);
 
       const fullAnswer = data.answer || '';
       setResponse(fullAnswer);
+      setLoading(false);
 
       if (fullAnswer) {
         setHistory(prev => [...prev, { question: currentQuestion, answer: fullAnswer }]);
@@ -119,7 +126,7 @@ export default function AskMode() {
       }
 
     } catch (err) {
-      setError(err.message || 'Failed to connect to DSSM Intelligence System. Is the server running?');
+      setError(err.message || 'Failed to connect to DSSM Intelligence System.');
       setLoading(false);
     }
   };
