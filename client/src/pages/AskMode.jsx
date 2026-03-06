@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ResponsePanel from '../components/ResponsePanel';
 import { apiFetch } from '../lib/apiFetch';
 import { useAuth } from '../context/AuthContext';
+import { supabase } from '../lib/supabase';
 
 const EXAMPLE_QUESTIONS = [
   "Why did the Indus Valley civilization never develop phonetic writing?",
@@ -100,29 +101,52 @@ export default function AskMode() {
         { role: 'assistant', content: h.answer }
       ])).flat();
 
-      // Use fetch with streaming (EventSource-style reading)
-      const res = await apiFetch('/api/ask', {
+      const { data: { session } } = await supabase.auth.getSession();
+      const token = session?.access_token;
+
+      const res = await fetch('/api/ask', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify({ question: currentQuestion, conversationHistory })
       });
 
-      let data;
-      try {
-        data = await res.json();
-      } catch (e) {
-        throw new Error(`Server returned invalid response (status ${res.status})`);
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || `Server error ${res.status}`);
       }
 
-      if (!res.ok) throw new Error(data.error || `Server error ${res.status}`);
-      if (data.error) throw new Error(data.error);
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let fullAnswer = '';
 
-      const fullAnswer = data.answer || '';
-      setResponse(fullAnswer);
-      setLoading(false);
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
 
-      if (fullAnswer) {
-        setHistory(prev => [...prev, { question: currentQuestion, answer: fullAnswer }]);
-        refreshCredits();
+        const text = decoder.decode(value);
+        const lines = text.split('\n').filter(line => line.startsWith('data: '));
+
+        for (const line of lines) {
+          try {
+            const data = JSON.parse(line.slice(6));
+            if (data.chunk) {
+              fullAnswer += data.chunk;
+              setResponse(fullAnswer);
+            }
+            if (data.done) {
+              setLoading(false);
+              if (fullAnswer) {
+                setHistory(prev => [...prev, { question: currentQuestion, answer: fullAnswer }]);
+                refreshCredits();
+              }
+            }
+          } catch (e) {
+            // ignore parse errors
+          }
+        }
       }
 
     } catch (err) {

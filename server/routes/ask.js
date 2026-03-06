@@ -17,14 +17,27 @@ router.post('/', async (req, res) => {
       { role: 'user', content: question }
     ];
 
-    const response = await client.messages.create({
+    const stream = await client.messages.stream({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 3000,
       system: getSystemPrompt('ask') + '\n\nFORMATTING RULE: Whenever your answer involves comparing multiple sites, stages, pathways, scores, timelines, or ranked lists — present that information as a markdown table.',
       messages
     });
 
-    res.json({ answer: response.content[0]?.text || '' });
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.setHeader('X-Accel-Buffering', 'no');
+
+    let fullText = '';
+    for await (const chunk of stream) {
+      if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') {
+        fullText += chunk.delta.text;
+        res.write(`data: ${JSON.stringify({ chunk: chunk.delta.text })}\n\n`);
+      }
+    }
+    res.write(`data: ${JSON.stringify({ done: true, full: fullText })}\n\n`);
+    res.end();
 
   } catch (err) {
     console.error('Ask route error:', err.message);
