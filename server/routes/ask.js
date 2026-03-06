@@ -12,40 +12,24 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: 'Question is required.' });
   }
 
-  // Use streaming so text appears word-by-word in the UI
-  res.setHeader('Content-Type', 'text/event-stream');
-  res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('Connection', 'keep-alive');
-  res.setHeader('X-Accel-Buffering', 'no');
-  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
-  res.flushHeaders();
-
   try {
     const messages = [
       ...conversationHistory.map(m => ({ role: m.role, content: m.content })),
       { role: 'user', content: question }
     ];
 
-    const stream = client.messages.stream({
+    const response = await client.messages.create({
       model: 'claude-sonnet-4-5',
       max_tokens: 3000,
-      system: getSystemPrompt('ask') + '\n\nFORMATTING RULE: Whenever your answer involves comparing multiple sites, stages, pathways, scores, timelines, or ranked lists — present that information as a markdown table. Use tables for: site comparisons, FCP score breakdowns, pathway feature comparisons, chronological sequences, and any multi-attribute data. Prose explanations should accompany but not replace tables where data is tabular in nature.',
+      system: getSystemPrompt('ask') + '\n\nFORMATTING RULE: Whenever your answer involves comparing multiple sites, stages, pathways, scores, timelines, or ranked lists — present that information as a markdown table.',
       messages
     });
 
-    // Stream each text chunk to the client as it arrives
-    stream.on('text', (text) => {
-      res.write(`data: ${JSON.stringify({ chunk: text })}\n\n`);
-    });
-
-    const finalMessage = await stream.finalMessage();
-    res.write(`data: ${JSON.stringify({ done: true, tokens: finalMessage.usage?.input_tokens + finalMessage.usage?.output_tokens })}\n\n`);
-    res.end();
+    res.json({ answer: response.content[0]?.text || '' });
 
   } catch (err) {
     console.error('Ask route error:', err.message);
-    res.write(`data: ${JSON.stringify({ error: err.message })}\n\n`);
-    res.end();
+    res.status(500).json({ error: err.message });
   }
 });
 

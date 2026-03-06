@@ -97,26 +97,12 @@ export default function SatelliteMode() {
         })
       });
 
-      if (!res.ok) throw new Error(`Server error ${res.status}`);
 
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let fullAnswer = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        const lines = decoder.decode(value, { stream: true }).split('\n');
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            try {
-              const data = JSON.parse(line.slice(6));
-              if (data.chunk) { fullAnswer += data.chunk; setResponse(fullAnswer); setLoading(false); }
-              if (data.error) throw new Error(data.error);
-            } catch(e) { /* partial */ }
-          }
-        }
-      }
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `Server error ${res.status}`);
+      if (data.error) throw new Error(data.error);
+      const fullAnswer = data.answer || '';
+      setResponse(fullAnswer);
       refreshCredits();
     } catch(err) {
       setError(err.message || 'Prediction failed. Is the server running?');

@@ -49,32 +49,14 @@ export default function ClassifyMode() {
         body: JSON.stringify({ siteName, location, dateRange, evidence })
       });
 
-      if (!res.ok) { throw new Error(`Server error ${res.status}`); }
 
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let fullAnswer = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        const lines = decoder.decode(value, { stream: true }).split('\n');
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            try {
-              const data = JSON.parse(line.slice(6));
-              if (data.chunk) {
-                fullAnswer += data.chunk;
-                setResponse(fullAnswer);
-                setLoading(false);
-                const stageMatch = fullAnswer.match(/Stage\s*[:-]?\s*(\d)/i);
-                if (stageMatch) setDetectedStage(parseInt(stageMatch[1]));
-              }
-              if (data.error) throw new Error(data.error);
-            } catch(e) { /* partial line */ }
-          }
-        }
-      }
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `Server error ${res.status}`);
+      if (data.error) throw new Error(data.error);
+      const fullAnswer = data.answer || '';
+      setResponse(fullAnswer);
+      const stageMatch = fullAnswer.match(/Stage\s*[:-]?\s*(\d)/i);
+      if (stageMatch) setDetectedStage(parseInt(stageMatch[1]));
       refreshCredits();
     } catch(err) {
       setError(err.message || 'Classification failed. Is the server running?');

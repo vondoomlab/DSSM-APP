@@ -106,40 +106,12 @@ export default function AskMode() {
         body: JSON.stringify({ question: currentQuestion, conversationHistory })
       });
 
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.error || `Server error ${res.status}`);
-      }
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `Server error ${res.status}`);
+      if (data.error) throw new Error(data.error);
 
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let fullAnswer = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split('\n');
-
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            try {
-              const data = JSON.parse(line.slice(6));
-              if (data.chunk) {
-                fullAnswer += data.chunk;
-                setResponse(fullAnswer);
-                setLoading(false); // Stop spinner as soon as first chunk arrives
-              }
-              if (data.error) throw new Error(data.error);
-            } catch(e) {
-              if (e.message !== 'Unexpected end of JSON input') {
-                // ignore parse errors on partial lines
-              }
-            }
-          }
-        }
-      }
+      const fullAnswer = data.answer || '';
+      setResponse(fullAnswer);
 
       if (fullAnswer) {
         setHistory(prev => [...prev, { question: currentQuestion, answer: fullAnswer }]);

@@ -47,32 +47,17 @@ Table of what to look for next in excavation:
 ## CONFIDENCE & GAPS
 Overall confidence level with key uncertainties listed.`;
 
-  res.setHeader('Content-Type', 'text/event-stream');
-  res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('Connection', 'keep-alive');
-  res.setHeader('X-Accel-Buffering', 'no');
-  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
-  res.flushHeaders();
-
   try {
-    const stream = client.messages.stream({
+    const response = await client.messages.create({
       model: 'claude-sonnet-4-5',
       max_tokens: 4096,
       system: getSystemPrompt('classify'),
       messages: [{ role: 'user', content: prompt }]
     });
-
-    stream.on('text', (text) => {
-      res.write(`data: ${JSON.stringify({ chunk: text })}\n\n`);
-    });
-
-    await stream.finalMessage();
-    res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
-    res.end();
+    res.json({ answer: response.content[0]?.text || '' });
   } catch (err) {
     console.error('Classify error:', err.message);
-    res.write(`data: ${JSON.stringify({ error: err.message })}\n\n`);
-    res.end();
+    res.status(500).json({ error: err.message });
   }
 });
 
