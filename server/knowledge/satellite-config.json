@@ -1,0 +1,190 @@
+{
+  "meta": {
+    "description": "Satellite and GIS data source configurations for DSSM excavation zone prediction",
+    "note": "All APIs are free/open-source. API keys stored in .env file."
+  },
+
+  "apis": {
+    "opentopography": {
+      "name": "OpenTopography — LiDAR Data",
+      "base_url": "https://portal.opentopography.org/API/otCatalog",
+      "lidar_url": "https://portal.opentopography.org/API/globaldem",
+      "documentation": "https://opentopography.org/developers",
+      "auth": "API key (free — register at opentopography.org)",
+      "rate_limit": "200 calls per 24 hours (academic)",
+      "env_key": "OPENTOPO_API_KEY",
+      "datasets": {
+        "SRTMGL1": {"resolution": "30m", "coverage": "Global (60°N–56°S)", "type": "Elevation"},
+        "SRTMGL3": {"resolution": "90m", "coverage": "Global", "type": "Elevation"},
+        "AW3D30": {"resolution": "30m", "coverage": "Global", "type": "Elevation"},
+        "COP30": {"resolution": "30m", "coverage": "Global", "type": "Copernicus DEM"}
+      },
+      "lidar_datasets": {
+        "note": "Point cloud LiDAR available for specific regions — US, parts of Europe, NZ, Australia",
+        "format": "LAZ (compressed LiDAR point cloud)",
+        "resolution": "1m typical",
+        "best_for": "Settlement mound detection, earthwork mapping, buried site outlines"
+      },
+      "endpoint_examples": {
+        "get_elevation": "GET /API/globaldem?demtype=SRTMGL1&west={lng_min}&east={lng_max}&south={lat_min}&north={lat_max}&outputFormat=GTiff&API_Key={key}",
+        "search_catalog": "GET /API/otCatalog?productFormat=PointCloud&minx={lng}&miny={lat}&maxx={lng2}&maxy={lat2}"
+      }
+    },
+
+    "usgs_3dep": {
+      "name": "USGS 3DEP — 3D Elevation Program",
+      "base_url": "https://elevation.nationalmap.gov/arcgis/rest/services",
+      "documentation": "https://www.usgs.gov/3d-elevation-program",
+      "auth": "None required (free, public)",
+      "rate_limit": "Generous — no documented limit",
+      "coverage": "99% of continental USA, 60% Alaska",
+      "resolution": "1m, 3m, 10m, 30m tiers",
+      "best_for": "North American archaeology sites",
+      "endpoint_example": "GET /3DEPElevation/ImageServer/exportImage?bbox={minx},{miny},{maxx},{maxy}&bboxSR=4326&format=tiff&pixelType=F32&f=json"
+    },
+
+    "copernicus_cdse": {
+      "name": "Copernicus Data Space Ecosystem (CDSE) — Sentinel-1 + Sentinel-2",
+      "base_url": "https://catalogue.dataspace.copernicus.eu/odata/v1",
+      "stac_url": "https://catalogue.dataspace.copernicus.eu/stac",
+      "documentation": "https://dataspace.copernicus.eu/",
+      "auth": "Free registration at dataspace.copernicus.eu — OAuth2 token",
+      "env_key": "COPERNICUS_TOKEN",
+      "note": "Replaced SciHub in 2023. Free for all users after registration.",
+      "sentinel_1": {
+        "type": "SAR (Synthetic Aperture Radar)",
+        "band": "C-band (5.6 cm wavelength)",
+        "resolution": "5–20m depending on acquisition mode",
+        "coverage": "Global, all-weather, day/night",
+        "revisit_time": "6 days (dual satellite constellation)",
+        "penetration": "Can penetrate dry soil 1–3m, vegetation canopy",
+        "best_for": [
+          "Arid zone subsurface feature detection (Sahara, Middle East, Central Asia)",
+          "Crop mark detection over buried sites",
+          "Temporal change detection (site disturbance monitoring)",
+          "Flood inundation mapping for site risk assessment"
+        ],
+        "product_types": ["SLC (Single Look Complex)", "GRD (Ground Range Detected)"]
+      },
+      "sentinel_2": {
+        "type": "Multispectral optical imagery",
+        "bands": "13 spectral bands (443nm–2190nm)",
+        "resolution": "10m (RGB+NIR), 20m (Red Edge, SWIR), 60m (coastal, water vapour)",
+        "coverage": "Global land surface",
+        "revisit_time": "5 days",
+        "best_for": [
+          "NDVI crop mark analysis over buried sites",
+          "Soil moisture mapping",
+          "Vegetation stress indicators (ghost cropmarks)",
+          "Multitemporal change detection"
+        ],
+        "key_indices": {
+          "NDVI": "(NIR - Red) / (NIR + Red) — vegetation stress/vigor",
+          "NDRE": "(RedEdge - Red) / (RedEdge + Red) — buried feature detection",
+          "SAVI": "Soil-adjusted vegetation index — better for arid zones"
+        }
+      },
+      "search_endpoint_example": "GET /odata/v1/Products?$filter=Collection/Name eq 'SENTINEL-2' and OData.CSC.Intersects(area=geography'SRID=4326;POINT({lon} {lat})') and ContentDate/Start gt {date}T00:00:00.000Z&$top=10"
+    },
+
+    "nasa_srtm": {
+      "name": "NASA SRTM — Shuttle Radar Topography Mission",
+      "base_url": "https://e4ftl01.cr.usgs.gov/MEASURES/SRTMGL1.003/2000.02.11/",
+      "documentation": "https://www2.jpl.nasa.gov/srtm/",
+      "auth": "NASA Earthdata account (free registration) OR use via OpenTopography",
+      "resolution": "30m (SRTM3=90m also available)",
+      "coverage": "Global between 60°N and 56°S",
+      "best_for": "Global baseline topography, site setting analysis",
+      "note": "Best accessed via OpenTopography API as proxy — same data, simpler auth"
+    },
+
+    "open_context": {
+      "name": "Open Context — Archaeological Dataset Repository",
+      "base_url": "https://opencontext.org/",
+      "api_url": "https://opencontext.org/search/.json",
+      "documentation": "https://opencontext.org/about/uses",
+      "auth": "None — completely open, no key required",
+      "rate_limit": "Polite use — no documented limit",
+      "best_for": "Known archaeological site data, excavation reports, artifact databases",
+      "endpoint_example": "GET /search/.json?q={search_term}&type=subjects&geo-bbox={bbox}"
+    },
+
+    "pleiades": {
+      "name": "Pleiades — Ancient World Gazetteer",
+      "base_url": "https://pleiades.stoa.org",
+      "api_url": "https://pleiades.stoa.org/search_rss",
+      "documentation": "https://pleiades.stoa.org/help/api",
+      "auth": "None — open access",
+      "best_for": "Historical/ancient place names, coordinates for ancient sites",
+      "json_endpoint": "GET /places/{place_id}/json"
+    },
+
+    "google_earth_engine": {
+      "name": "Google Earth Engine — Cloud Geospatial Analysis",
+      "base_url": "https://earthengine.googleapis.com",
+      "documentation": "https://developers.google.com/earth-engine",
+      "auth": "Free for research/academic — Google account + project approval",
+      "env_key": "GEE_API_KEY",
+      "note": "Requires Python or JS client. For server-side processing of large satellite datasets.",
+      "best_for": "Time-series analysis, ML-based site prediction, large-area processing"
+    }
+  },
+
+  "lidar_analysis_techniques": {
+    "bare_earth_model": {
+      "description": "Remove vegetation and buildings from LiDAR point cloud to reveal ground surface",
+      "method": "Ground filtering algorithms (e.g., Progressive Morphological Filter)",
+      "reveals": "Buried earthworks, mounds, ditches, field systems"
+    },
+    "hillshade": {
+      "description": "Simulate sunlight at low angles to reveal subtle topographic features",
+      "parameters": "Multiple azimuths (0°, 45°, 90°, 135°, 180°, 225°, 270°, 315°) for complete coverage",
+      "reveals": "Linear features, enclosures, trackways, building footprints"
+    },
+    "slope_analysis": {
+      "description": "Calculate rate of elevation change — sudden slope changes indicate artificial features",
+      "reveals": "Walls, ditches, terraces, mound edges"
+    },
+    "sky_view_factor": {
+      "description": "Proportion of visible sky from each point — flat-topped mounds show high SVF",
+      "reveals": "Subtle mounds, platform structures, depressions"
+    },
+    "local_relief_model": {
+      "description": "Remove regional topographic trend to isolate local features",
+      "reveals": "Low-relief earthworks in complex terrain"
+    }
+  },
+
+  "ml_site_prediction": {
+    "best_architectures": ["U-Net (semantic segmentation)", "Mask R-CNN (instance segmentation)"],
+    "reported_accuracy": "80–90%+ precision/recall for known site types",
+    "optimal_input_stack": "LiDAR (bare earth) + Sentinel-2 (multispectral) + Sentinel-1 (SAR)",
+    "javascript_libraries": {
+      "raster_processing": "geotiff.js — read GeoTIFF files in browser/Node",
+      "spatial_analysis": "Turf.js — spatial calculations, point-in-polygon, buffering",
+      "mapping": "Leaflet.js — tile maps, GeoJSON overlay, marker clusters",
+      "3d_terrain": "Cesium.js — 3D globe for LiDAR visualization",
+      "server_lidar": "PDAL (Point Data Abstraction Library) — Node.js bindings available"
+    }
+  },
+
+  "dssm_excavation_prediction_logic": {
+    "description": "How DSSM theory guides excavation zone prediction from satellite data",
+    "stage_1_signatures": {
+      "look_for": ["Cave sites with south-facing aspect", "Rock shelter clusters", "Ochre source proximity", "Coastal/river resource zones"],
+      "satellite_indicators": ["LiDAR: shelter overhangs, cave entrances", "NDVI: resource-rich corridors"]
+    },
+    "stage_2_signatures": {
+      "look_for": ["Small village clusters (1–5 ha)", "Workshop area concentrations", "Burial mound fields", "Raw material source connections"],
+      "satellite_indicators": ["LiDAR: small circular mounds, pit alignments", "SAR: subsurface material differences"]
+    },
+    "stage_3_signatures": {
+      "look_for": ["Nucleated settlement >5 ha", "Public/monumental structure", "Settlement hierarchy (3+ tiers)", "Long-distance trade route nodes"],
+      "satellite_indicators": ["LiDAR: platform mounds, enclosures, grid layouts", "NDVI: crop marks over buried walls", "SAR: dense subsurface features"]
+    },
+    "stage_4_signatures": {
+      "look_for": ["Urban core >50 ha", "Administrative district spatial separation", "Storage facility clusters", "Road/canal networks"],
+      "satellite_indicators": ["LiDAR: grid street systems, large platforms", "Multitemporal: buried city blocks"]
+    }
+  }
+}

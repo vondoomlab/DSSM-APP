@@ -1,0 +1,387 @@
+{
+  "meta": {
+    "title": "Deep Symbolic Systems Model — Core Framework Knowledge Base",
+    "author": "Anthony Vondoom",
+    "version": "1.0.0",
+    "papers_encoded": 37,
+    "description": "Complete structured knowledge base encoding all DSSM papers for AI reasoning"
+  },
+
+  "dssm_definition": {
+    "full_name": "Deep Symbolic Systems Model",
+    "core_claim": "Civilization is not invented — it is rehearsed. Symbolic stabilization precedes and causes monumentality, writing, and state formation by centuries to millennia.",
+    "key_insight": "The DSSM identifies the cognitive and material conditions under which symbolic systems transition from local/embodied to portable/transmissible to architecturally encoded, producing what we recognize as civilization.",
+    "falsification_conditions": [
+      "A site achieves Stages 3–4 without evidence of Stage 1–2 groundwork",
+      "Writing emerges without prior portable anchor systems",
+      "Monumentality appears before symbolic saturation",
+      "A DSSM-saturated system fails to produce ANY of the four predicted outcomes"
+    ]
+  },
+
+  "four_stages": {
+    "stage_1": {
+      "name": "Embodied Symbolic Familiarity",
+      "description": "Proto-symbolic behaviors embedded in body, gesture, and perishable materials. Symbolic behaviors exist but are not yet systematized or transmissible beyond face-to-face interaction.",
+      "duration_window_years": "100–500",
+      "neural_substrate": "Working memory enhancement, episodic specificity",
+      "archaeological_signatures": [
+        "Ochre use (pigment application to bodies, objects)",
+        "Perforated shells (non-functional personal ornaments)",
+        "Simple engraved patterns (non-representational geometric marks)",
+        "Irregular body-paint residues",
+        "Ochre-stained grinding stones"
+      ],
+      "detection_rule": "At least 2 of the listed signatures co-occurring in spatial/temporal association",
+      "exemplars": {
+        "Blombos_Cave_SA": "Ochre processing kits, engraved ochre, shell beads — 100,000–70,000 BCE",
+        "Qafzeh_Israel": "Shell ornaments, ochre — 90,000 BCE",
+        "Pinnacle_Point_SA": "Ochre use — 164,000 BCE"
+      }
+    },
+    "stage_2": {
+      "name": "Ritualized Repetition",
+      "description": "Symbolic behaviors become formalized, repeated with high fidelity across generations. Coefficient of Variation (CV) of key assemblage metrics falls below 0.25. Portable anchor objects appear — objects that embody and transmit symbolic codes outside face-to-face interaction.",
+      "duration_window_years": "200–800",
+      "cv_threshold": "CV < 0.25 for primary symbolic media; CV < 0.15 signals Stage 3 approach",
+      "neural_substrate": "Pattern completion, procedural memory consolidation, cross-modal binding",
+      "archaeological_signatures": [
+        "Standardized ornament production (consistent size, perforation technique)",
+        "Ochre processing with consistent grinding protocols",
+        "Repeated geometric motifs across sites (transmission signal)",
+        "Portable anchor objects (beads, figurines, decorated tools)",
+        "Evidence of apprenticeship or teaching contexts"
+      ],
+      "detection_rule": "Standardization metric CV < 0.25 in primary assemblage + portable symbolic objects present",
+      "exemplars": {
+        "Blombos_Cave_Stage2": "Shell bead standardization CV = 0.08 — 85,000–70,000 BCE",
+        "Halafian_Pottery": "Flower petal count arithmetic: 4, 8, 16, 32, 64 — CV 0.12 — 6200–5500 BCE",
+        "Sri_Lanka_Microlithic": "CV = 4.7% over 20,000 years — Stage 2 persisting without Stage 3"
+      }
+    },
+    "stage_3": {
+      "name": "Material Amplification",
+      "description": "Community size crosses the P7 threshold (~500 individuals), triggering externalization of symbolic systems into durable material forms. Symbolic content moves from bodies and portable objects into architecture, pottery programs, and monumental markers. This is where what we call 'civilization' becomes archaeologically visible.",
+      "duration_window_years": "500–1500",
+      "p7_threshold": 500,
+      "p7_explanation": "At ~500 individuals, face-to-face coordination breaks down. Symbolic systems must be externalized into durable material substrates to maintain social coherence.",
+      "cv_threshold": "CV < 0.15",
+      "archaeological_signatures": [
+        "Public architecture (shrines, communal structures, meeting houses)",
+        "Standardized pottery programs with symbolic motifs",
+        "Settlement hierarchies (not just villages — ranked sites)",
+        "Specialist production contexts (dedicated workshops)",
+        "Long-distance trade in prestige/symbolic goods",
+        "Burial differentiation (status-marked graves)"
+      ],
+      "detection_rule": "Settlement evidence for >500 persons + monumental/public structures + standardized symbolic program across multiple media",
+      "exemplars": {
+        "Catalhoyuk": "Stage 3 plateau without writing — symbolic saturation through murals, bull bucrania",
+        "Mehrgarh_IB": "Figurines, standardized ornaments — Stage 3 entry ~6000 BCE",
+        "Vinca_Culture": "Symbolic saturation 5700–4500 BCE — Europe's earliest Stage 3"
+      }
+    },
+    "stage_4": {
+      "name": "Cognitive Offloading",
+      "description": "Symbolic systems exceed working memory and oral transmission capacity, forcing externalization into persistent records. Writing (or equivalent proto-writing) emerges as a RESPONSE to symbolic overload, not as an invention. This stage is contingent — some civilizations achieve symbolic sufficiency without reaching Stage 4.",
+      "duration_window_years": "Variable — may not occur",
+      "contingency_note": "Writing is NOT inevitable. Three outcomes are possible: (1) Overload → writing (Mesopotamia/Egypt), (2) Structural resolution → no writing needed (Indus/Sri Lanka), (3) Terminal stabilization → writing preserves existing system (Egypt at Dynasty I)",
+      "archaeological_signatures": [
+        "Proto-writing / accounting tokens (clay tablets, tallies)",
+        "Administrative seals with standardized iconography",
+        "Spatial segregation of scribal/administrative activity",
+        "Multi-layer inscription systems (pictographic → syllabic → alphabetic)",
+        "Standardized container/measurement systems"
+      ],
+      "detection_rule": "Evidence of systematic information storage beyond oral tradition — tokens, seals, proto-script, tally systems",
+      "exemplars": {
+        "Uruk_Mesopotamia": "Overload → cuneiform — 3400–3100 BCE",
+        "Egypt_Dynasty_I": "Preservative writing — 3100 BCE",
+        "Indus_Script": "Structural resolution — seals as collective codes, not phonetic script",
+        "Sri_Lanka": "Stage 4 never reached — symbolic sufficiency maintained orally for 100,000+ years"
+      }
+    }
+  },
+
+  "fcp_scoring_system": {
+    "name": "Field Companion Protocol (FCP) 2D Scoring",
+    "description": "The FCP scores 6 observables on two axes: Evidence Strength (E) and Symbolic Specificity (S). Final score uses the min-rule: Final = min(E, S). Maximum possible: 12/12.",
+    "axes": {
+      "E": {
+        "name": "Evidence Strength",
+        "description": "Quality, quantity, and reliability of the archaeological evidence",
+        "scale": "0–2 per observable (0=absent, 1=partial/ambiguous, 2=unambiguous/well-documented)"
+      },
+      "S": {
+        "name": "Symbolic Specificity",
+        "description": "Degree to which the evidence demonstrates symbolic rather than purely functional behavior",
+        "scale": "0–2 per observable (0=no symbolic content, 1=possible symbolic content, 2=clear symbolic system)"
+      }
+    },
+    "min_rule": "Final_Score = min(Total_E, Total_S). This prevents high evidence from masking weak symbolic content or vice versa.",
+    "max_score": 12,
+    "threshold": "≥7/8 with no zeros required for DSSM Stage 2+ classification",
+    "six_observables": {
+      "O1": {
+        "name": "Pigment / Ochre Use",
+        "description": "Non-functional application of colorants to bodies, objects, or surfaces",
+        "E_criteria": {
+          "0": "No pigment evidence",
+          "1": "Pigment present but functional use cannot be excluded",
+          "2": "Systematic, non-functional pigment use with processing evidence"
+        },
+        "S_criteria": {
+          "0": "No symbolic context",
+          "1": "Possible body-paint or marking use",
+          "2": "Ochre in clear symbolic/ritual context (grave goods, symbolic objects)"
+        }
+      },
+      "O2": {
+        "name": "Personal Ornaments",
+        "description": "Perforated shells, beads, teeth — worn objects with no functional utility",
+        "E_criteria": {
+          "0": "Absent",
+          "1": "Single item or ambiguous perforation",
+          "2": "Multiple items, standardized perforation technique, wear patterns consistent with suspension"
+        },
+        "S_criteria": {
+          "0": "No symbolic content",
+          "1": "Possibly ornamental",
+          "2": "Clearly non-functional symbolic display items"
+        }
+      },
+      "O3": {
+        "name": "Geometric Engravings",
+        "description": "Abstract marks on stone, bone, or shell — non-representational",
+        "E_criteria": {
+          "0": "Absent",
+          "1": "Single mark or ambiguous incision",
+          "2": "Systematic, repeated geometric patterns on multiple objects"
+        },
+        "S_criteria": {
+          "0": "No symbolic content",
+          "1": "Possible symbolic content",
+          "2": "Deliberate symbolic communication evident (standardized grammar)"
+        }
+      },
+      "O4": {
+        "name": "Portable Symbolic Anchors",
+        "description": "Objects designed to embody and transmit symbolic codes — figurines, amulets, decorated tools, standardized seals",
+        "E_criteria": {
+          "0": "Absent",
+          "1": "Single item or ambiguous",
+          "2": "Multiple items with clear symbolic program; production standardization"
+        },
+        "S_criteria": {
+          "0": "No symbolic content",
+          "1": "Possible symbolic use",
+          "2": "Clear portable symbolic system — objects function as symbolic transmitters across space/time"
+        }
+      },
+      "O5": {
+        "name": "Spatial Complexity / Architecture",
+        "description": "Constructed spaces that organize symbolic activity — shrines, public spaces, monumental structures",
+        "E_criteria": {
+          "0": "Absent",
+          "1": "Possible constructed space, ambiguous function",
+          "2": "Clear constructed space with non-domestic function"
+        },
+        "S_criteria": {
+          "0": "No symbolic organization",
+          "1": "Possible ritual/symbolic use of space",
+          "2": "Architecture as symbolic system — spatial grammar encodes symbolic hierarchy"
+        }
+      },
+      "O6": {
+        "name": "Standardization / Transmission Evidence",
+        "description": "Evidence that symbolic patterns are being transmitted across individuals and generations — CV metrics, cross-site consistency",
+        "E_criteria": {
+          "0": "No standardization evidence",
+          "1": "Some consistency but limited sample",
+          "2": "Documented standardization: CV < 0.25, cross-site consistency"
+        },
+        "S_criteria": {
+          "0": "No transmission evidence",
+          "1": "Possible transmission",
+          "2": "Demonstrable symbolic transmission system — same grammar reproduced across space/time"
+        }
+      }
+    }
+  },
+
+  "stabilization_pathways": {
+    "description": "Five pathways by which symbolic systems achieve Stage 3 stabilization. Not all lead to writing or monumentality.",
+    "pathway_1": {
+      "name": "Landscape-Anchor Pathway",
+      "regions": ["Egypt", "Mesopotamia"],
+      "mechanism": "River-controlled agriculture creates seasonal symbolic rhythms tied to landscape features. Flood/harvest cycles become ritual calendars. Monumentality anchors symbolic systems to fixed points.",
+      "key_diagnostic": "Large-scale hydraulic infrastructure precedes or accompanies early monumentality",
+      "writing_outcome": "Writing as administrative/preservative tool (Stage 4 reached)"
+    },
+    "pathway_2": {
+      "name": "Portable-Craft Pathway",
+      "regions": ["East Asia (Hongshan, Liangzhu, Erlitou)"],
+      "mechanism": "Jade and ceramic craft traditions carry symbolic systems across space without fixed monuments. Portable objects are the primary transmission medium. Monumentality comes late (Erlitou) as compression of already-saturated system.",
+      "key_diagnostic": "High-investment portable prestige objects precede monumental architecture by centuries",
+      "writing_outcome": "Oracle bones as Stage 4 arrival (late, contingent)"
+    },
+    "pathway_3": {
+      "name": "Ritual-Network Pathway",
+      "regions": ["Mesoamerica (Olmec, early Maya)"],
+      "mechanism": "No axial river needed. Symbolic systems transmitted through inter-site ritual networks. Jade as portable anchor. Long-distance exchange networks are the transmission vector.",
+      "key_diagnostic": "Exotic prestige goods (jade, obsidian) found at multiple sites before any writing",
+      "writing_outcome": "Maya script as late Stage 4 consolidation"
+    },
+    "pathway_4": {
+      "name": "Infrastructure-Quotidian Pathway",
+      "regions": ["Indus Valley (Harappan civilization)"],
+      "mechanism": "Symbolic system embedded in everyday objects — seals, standardized weights, ceramic programs. No need for monumental expression. Writing emerges as structural resolution (seals encode collective identity, not phonetics).",
+      "key_diagnostic": "Standardized weights, seals, and ceramics across vast geographic area without monuments",
+      "writing_outcome": "Indus Script as structural resolution — Stage 4 NOT reached in phonetic sense"
+    },
+    "pathway_5": {
+      "name": "Forager-Mnemonic Pathway",
+      "regions": ["Sri Lanka (Balangoda Culture)", "possibly Australia"],
+      "mechanism": "Symbolic sufficiency achieved through oral/embodied transmission without material amplification. Forager communities maintain symbolic stability for 100,000+ years without transitioning to Stage 3. Not a failure — a different form of success.",
+      "key_diagnostic": "High-quality microlithic standardization (CV < 5%) sustained over millennia without settlement nucleation",
+      "writing_outcome": "Stage 4 never reached — not needed"
+    }
+  },
+
+  "neural_timescale_bridge": {
+    "description": "Maps laboratory neuroscience timescales to archaeological detection windows",
+    "table": [
+      {
+        "process": "Episodic memory consolidation",
+        "lab_timescale": "Hours to days",
+        "individual_lifespan": "Years",
+        "generational_transmission": "Decades",
+        "archaeological_detection": "Impossible — too short",
+        "dssm_stage": "Pre-Stage 1"
+      },
+      {
+        "process": "Procedural skill acquisition",
+        "lab_timescale": "Days to weeks",
+        "individual_lifespan": "Years",
+        "generational_transmission": "Decades to centuries",
+        "archaeological_detection": "100–500 years (Stage 1 window)",
+        "dssm_stage": "Stage 1"
+      },
+      {
+        "process": "Cultural pattern transmission",
+        "lab_timescale": "Years",
+        "individual_lifespan": "Decades",
+        "generational_transmission": "Centuries",
+        "archaeological_detection": "200–800 years (Stage 2 window)",
+        "dssm_stage": "Stage 2"
+      },
+      {
+        "process": "Institutional symbolic stabilization",
+        "lab_timescale": "Decades",
+        "individual_lifespan": "Centuries",
+        "generational_transmission": "Millennia",
+        "archaeological_detection": "500–1500 years (Stage 3 window)",
+        "dssm_stage": "Stage 3"
+      },
+      {
+        "process": "Written cognitive offloading",
+        "lab_timescale": "Centuries",
+        "individual_lifespan": "Millennia",
+        "generational_transmission": "Open-ended",
+        "archaeological_detection": "Visible in record (Stage 4)",
+        "dssm_stage": "Stage 4"
+      }
+    ]
+  },
+
+  "ewmh": {
+    "name": "Enhanced Working Memory Hypothesis",
+    "description": "Explains why Neanderthals (Bruniquel, 176,000 BCE, 8/12) could not achieve portable symbolic systems despite clear proto-symbolic behaviors. The key difference is enhanced working memory in Homo sapiens enabling cross-modal integration and portable symbolic systems.",
+    "neanderthal_limit": "Could construct complex spatial structures (Bruniquel ring), could use fire, but lacked the working memory enhancement to project symbolic content INTO portable objects. Score ceiling: 8/12 (O4 Portable Anchors = 0).",
+    "sapiens_enhancement": "Enhanced working memory enables: (1) binding visual + spatial + semantic content simultaneously, (2) projecting symbolic content onto novel substrates, (3) transmitting symbolic systems to non-present others via portable objects.",
+    "key_test_case": {
+      "Bruniquel_Cave": {
+        "date": "~176,000 BCE",
+        "species": "Homo neanderthalensis",
+        "score": "8/12",
+        "limiting_factor": "O4 (Portable Anchors) = 0 — no evidence of portable symbolic objects"
+      },
+      "Blombos_Cave": {
+        "date": "~100,000–70,000 BCE",
+        "species": "Homo sapiens sapiens",
+        "score": "12/12",
+        "achievement": "Full portable symbolic system — shell beads, engraved ochre, ochre processing kits"
+      }
+    }
+  },
+
+  "writing_as_contingent": {
+    "thesis": "Writing is not a universal outcome of symbolic development. It is one of three possible resolutions to the symbolic saturation problem.",
+    "three_outcomes": {
+      "outcome_1": {
+        "name": "Overload → Writing",
+        "description": "Symbolic system exceeds cognitive/social capacity, forcing externalization into written records",
+        "cases": ["Mesopotamia (cuneiform ~3400 BCE)", "Egypt (hieroglyphs ~3100 BCE)"],
+        "mechanism": "Administrative complexity of large urban centers overwhelms oral transmission capacity"
+      },
+      "outcome_2": {
+        "name": "Structural Resolution → No Writing",
+        "description": "Symbolic system finds non-written structural solutions: standardized seals, weights, and spatial organization solve the coordination problem",
+        "cases": ["Indus Valley", "Sri Lanka", "Çatalhöyük"],
+        "mechanism": "Material culture itself becomes the cognitive offloading medium without phonetic script"
+      },
+      "outcome_3": {
+        "name": "Terminal Stabilization → Writing Preserves",
+        "description": "Writing emerges to preserve an already-stabilized symbolic system, not to manage new complexity",
+        "cases": ["Egypt at Dynasty I boundary", "Maya"],
+        "mechanism": "Writing as prestige/religious preservation tool for a system that was already stable"
+      }
+    }
+  },
+
+  "technology_as_fossilized_ritual": {
+    "three_processes": {
+      "material_compression": "Symbolic behaviors compressed into compact material forms (bead → seal → coin → credit card)",
+      "cognitive_offloading": "Mental operations transferred to material substrate (memory → writing → database → AI)",
+      "symbolic_stabilization": "Compressed, offloaded systems achieve cross-generational stability"
+    },
+    "examples": {
+      "agriculture": "Fossilizes patience — the annual cycle of planting/harvest encoded in social rhythms",
+      "writing": "Fossilizes obligation — debt, law, contract made durable",
+      "money": "Fossilizes trust — abstract value made portable",
+      "empire": "Fossilizes conquest — territorial dominance made institutional",
+      "AI": "Fossilizes cognition — reasoning patterns made persistent and transmissible"
+    },
+    "industrial_revolution_explanation": "Europe industrialized first because metallurgical protocols (Iron Age → Medieval guild systems → Industrial guild dissolution) created the highest cognitive-offloading density per century."
+  },
+
+  "war_and_symbolic_failure": {
+    "thesis": "War is not an inevitable human behavior. It is a failure mode of symbolic regulation systems.",
+    "decision_time_risk_table": [
+      {"decision_time": ">96 hours", "escalation_probability": "5%"},
+      {"decision_time": "48–96 hours", "escalation_probability": "23%"},
+      {"decision_time": "24–48 hours", "escalation_probability": "47%"},
+      {"decision_time": "<24 hours", "escalation_probability": "82%"}
+    ],
+    "dssm_interpretation": "Warfare emerges when symbolic systems fail to provide coordination mechanisms. Stage 3 systems with weak symbolic saturation are most vulnerable. Stage 4 systems can encode peace protocols in written law."
+  },
+
+  "glossary": {
+    "DSSM": "Deep Symbolic Systems Model — the theoretical framework",
+    "FCP": "Field Companion Protocol — the standardized scoring instrument",
+    "CV": "Coefficient of Variation — standardization metric; lower = more standardized",
+    "P7_threshold": "~500 individuals — community size at which face-to-face coordination breaks down",
+    "symbolic_saturation": "Point at which a symbolic system has sufficient redundancy, specificity, and stability to persist without the original practitioners",
+    "portable_anchor": "An object designed to embody and transmit symbolic content across space and time (bead, figurine, seal)",
+    "cognitive_offloading": "Transfer of mental operations to material substrates",
+    "material_amplification": "Stage 3 process of externalizing symbolic systems into durable architecture and objects",
+    "symbolic_specificity": "S-axis measure — degree to which evidence reflects deliberate symbolic behavior vs. functional behavior",
+    "evidence_strength": "E-axis measure — quality and reliability of archaeological documentation",
+    "min_rule": "FCP scoring rule: Final = min(E_total, S_total)",
+    "stabilization_pathway": "Regional trajectory through DSSM stages — 5 pathways identified",
+    "forager_mnemonic": "5th stabilization pathway (Sri Lanka/Australia) — oral/embodied sufficiency without material amplification",
+    "EWMH": "Enhanced Working Memory Hypothesis — explains Homo sapiens advantage over Neanderthals",
+    "symbolic_continuity": "Maintenance of symbolic system coherence across generations without writing",
+    "stage_transition": "Archaeologically detectable shift between DSSM stages, typically requiring 100–1500 years"
+  }
+}

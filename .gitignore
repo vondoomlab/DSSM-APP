@@ -1,0 +1,19 @@
+# Environment — NEVER commit this
+.env
+.env.local
+.env.production
+
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# React build output
+client/build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
