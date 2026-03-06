@@ -4,7 +4,6 @@ const Anthropic = require('@anthropic-ai/sdk');
 const { getSystemPrompt } = require('../utils/systemPrompt');
 
 router.post('/', async (req, res) => {
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
   const { question, conversationHistory = [] } = req.body;
 
   if (!question || question.trim().length === 0) {
@@ -12,6 +11,7 @@ router.post('/', async (req, res) => {
   }
 
   try {
+    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const messages = [
       ...conversationHistory.map(m => ({ role: m.role, content: m.content })),
       { role: 'user', content: question }

@@ -4,7 +4,6 @@ const Anthropic = require('@anthropic-ai/sdk');
 const { getSystemPrompt } = require('../utils/systemPrompt');
 
 router.post('/', async (req, res) => {
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
   const { region, lat, lng, radius_km = 50, known_sites = [], satellite_observations = [], target_stage } = req.body;
 
   if (!region && (!lat || !lng)) {
@@ -49,6 +48,7 @@ Two sentences only: what specific finding would disprove DSSM predictions here?
 For each zone in the summary table — 3 bullets max: DSSM justification, top satellite signatures, predicted artifacts.`;
 
   try {
+    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const response = await client.messages.create({
       model: 'claude-sonnet-4-5',
       max_tokens: 3000,

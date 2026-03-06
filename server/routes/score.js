@@ -4,7 +4,6 @@ const Anthropic = require('@anthropic-ai/sdk');
 const { getSystemPrompt } = require('../utils/systemPrompt');
 
 router.post('/', async (req, res) => {
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
   const { siteName, location, dateRange, observables } = req.body;
 
   if (!siteName) {
@@ -60,6 +59,7 @@ Flag any zero scores with ⚠️. Apply MIN RULE: Final Score = min(Total_E, Tot
 What the score reveals about this site's position in the DSSM sequence, what the bottleneck axis tells us, and what evidence would raise the score.`;
 
   try {
+    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const response = await client.messages.create({
       model: 'claude-sonnet-4-5',
       max_tokens: 4096,

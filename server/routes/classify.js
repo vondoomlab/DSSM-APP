@@ -4,7 +4,6 @@ const Anthropic = require('@anthropic-ai/sdk');
 const { getSystemPrompt } = require('../utils/systemPrompt');
 
 router.post('/', async (req, res) => {
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
   const { siteName, location, dateRange, evidence } = req.body;
 
   if (!siteName || !evidence) {
@@ -47,6 +46,7 @@ Table of what to look for next in excavation:
 Overall confidence level with key uncertainties listed.`;
 
   try {
+    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const response = await client.messages.create({
       model: 'claude-sonnet-4-5',
       max_tokens: 4096,
