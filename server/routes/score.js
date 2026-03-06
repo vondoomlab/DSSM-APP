@@ -61,7 +61,7 @@ What the score reveals about this site's position in the DSSM sequence, what the
   try {
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const response = await client.messages.create({
-      model: 'claude-sonnet-4-5',
+      model: 'claude-haiku-4-5-20251001',
       max_tokens: 4096,
       system: getSystemPrompt('score'),
       messages: [{ role: 'user', content: prompt }]

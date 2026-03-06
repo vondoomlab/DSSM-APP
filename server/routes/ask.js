@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     ];
 
     const response = await client.messages.create({
-      model: 'claude-sonnet-4-5',
+      model: 'claude-haiku-4-5-20251001',
       max_tokens: 3000,
       system: getSystemPrompt('ask') + '\n\nFORMATTING RULE: Whenever your answer involves comparing multiple sites, stages, pathways, scores, timelines, or ranked lists — present that information as a markdown table.',
       messages
