@@ -68,8 +68,29 @@ const s = {
 
 export default function ResponsePanel({ response, loading, error, title = 'DSSM ANALYSIS' }) {
   const [copied, setCopied] = useState(false);
+  const [displayed, setDisplayed] = useState('');
   const panelRef = useRef(null);
   const hasScrolled = useRef(false);
+  const animRef = useRef(null);
+
+  // Typewriter effect when response arrives
+  useEffect(() => {
+    if (animRef.current) clearInterval(animRef.current);
+    if (!response) { setDisplayed(''); return; }
+
+    let index = 0;
+    animRef.current = setInterval(() => {
+      index += 8;
+      if (index >= response.length) {
+        setDisplayed(response);
+        clearInterval(animRef.current);
+      } else {
+        setDisplayed(response.slice(0, index));
+      }
+    }, 16);
+
+    return () => clearInterval(animRef.current);
+  }, [response]);
 
   // Auto-scroll to panel when response first starts streaming
   useEffect(() => {
@@ -121,7 +142,7 @@ export default function ResponsePanel({ response, loading, error, title = 'DSSM 
         <span style={s.icon}>𓂀</span>
         <span style={s.title}>{title}</span>
 
-        {response && !loading && (
+        {displayed === response && response && !loading && (
           <div style={s.actions}>
             <button
               style={copied ? s.actionBtnSuccess : s.actionBtn}
@@ -154,7 +175,7 @@ export default function ResponsePanel({ response, loading, error, title = 'DSSM 
         </div>
       )}
 
-      {response && !loading && (
+      {displayed && !loading && (
         <div style={s.content}>
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -178,7 +199,7 @@ export default function ResponsePanel({ response, loading, error, title = 'DSSM 
               td: ({node, ...p}) => <td style={{border:'1px solid #2d1800', padding:'0.4rem 0.6rem', color:'#c8b580'}} {...p} />,
             }}
           >
-            {response}
+            {displayed}
           </ReactMarkdown>
         </div>
       )}
