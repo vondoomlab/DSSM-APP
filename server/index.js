@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const NodeCache = require('node-cache');
+const path = require('path');
 
 const askRoute      = require('./routes/ask');
 const classifyRoute = require('./routes/classify');
@@ -62,6 +63,14 @@ app.use('/api/ask',      requireAuth, askRoute);
 app.use('/api/classify', requireAuth, classifyRoute);
 app.use('/api/score',    requireAuth, scoreRoute);
 app.use('/api/predict',  requireAuth, predictRoute);
+
+// ── Serve React frontend ───────────────────────────────────────────────────────
+const clientBuild = path.join(__dirname, '../client/build');
+app.use(express.static(clientBuild));
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) return next();
+  res.sendFile(path.join(clientBuild, 'index.html'));
+});
 
 // ── Health check ──────────────────────────────────────────────────────────────
 app.get('/api/health', (req, res) => {
