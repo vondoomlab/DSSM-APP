@@ -5,6 +5,7 @@ const MODES = [
   { id: 'classify',  label: '🏛️ Stage Classifier',  desc: 'Classify a site into DSSM Stages 1–4' },
   { id: 'score',     label: '📊 FCP 2D Scorer',     desc: 'Score a site with the Field Companion Protocol' },
   { id: 'satellite', label: '🛰️ Satellite Analysis', desc: 'Predict excavation zones from satellite data' },
+  { id: 'papers',    label: '𓂀 Paper Library',     desc: '37 encoded papers — hover for abstracts' },
 ];
 
 const s = {

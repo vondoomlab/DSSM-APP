@@ -6,6 +6,7 @@ import AskMode from './pages/AskMode';
 import ClassifyMode from './pages/ClassifyMode';
 import ScoreMode from './pages/ScoreMode';
 import SatelliteMode from './pages/SatelliteMode';
+import PapersMode from './pages/PapersMode';
 import LoginPage from './pages/LoginPage';
 import BuyCreditsModal from './components/BuyCreditsModal';
 
@@ -67,6 +68,7 @@ function AppInner() {
       case 'classify':  return <ClassifyMode />;
       case 'score':     return <ScoreMode />;
       case 'satellite': return <SatelliteMode />;
+      case 'papers':    return <PapersMode />;
       case 'ask':
       default:          return <AskMode />;
     }

@@ -102,7 +102,7 @@ export default function Header() {
     <header style={s.header}>
       <span style={s.glyph}>𓂀</span>
       <h1 style={s.title}>DSSM Intelligence System</h1>
-      <p style={s.subtitle}>Deep Symbolic Systems Model · Reasoning Engine · v1.1</p>
+      <p style={s.subtitle}>the Deep Symbolic Systems Model · Reasoning Engine · v1.1</p>
 
       <div style={s.badge}>
         <span style={s.authorBadge}>by Anthony Vondoom</span>
